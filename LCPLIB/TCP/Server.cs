@@ -14,7 +14,7 @@ namespace LCPLIB.TCP
     {
         const int port = 8888;
         static TcpListener listener;
-        static void Main(string[] args)
+        public void Start()
         {
             try
             {

@@ -8,6 +8,8 @@
         Title="MainWindow" Height="450" Width="800">
     <Grid>
         <Button Content="Button" HorizontalAlignment="Left" Height="48" Margin="152,142,0,0" VerticalAlignment="Top" Width="52" Click="Button_Click"/>
+        <Button Content="старт сервера" HorizontalAlignment="Center" Height="72" Margin="0,166,0,0" VerticalAlignment="Top" Width="87" Click="Button_Click_1"/>
+        <Button Content="Отправить" HorizontalAlignment="Left" Height="72" Margin="488,166,0,0" VerticalAlignment="Top" Width="95" Click="Button_Click_2"/>
 
     </Grid>
 </Window>

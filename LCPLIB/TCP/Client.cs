@@ -10,11 +10,11 @@ using System.Threading.Tasks;
 
 namespace LCPLIB.TCP
 {
-    class Client
+    public class Client
     {
         const int port = 8888;
         const string address = "127.0.0.1";
-        static void Main(string[] args)
+        public void Start()
         {
             TcpClient client = null;
             try
