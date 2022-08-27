@@ -32,10 +32,5 @@ namespace AdminApp
             bc.Send(1111);
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
-        {
-            BroadCast bc = new BroadCast();
-            bc.Recieve();
-        }
     }
 }
