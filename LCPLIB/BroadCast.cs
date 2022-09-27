@@ -10,22 +10,26 @@ using System.Windows;
 
 namespace LCPLIB
 {
+    public delegate void ConnectHandler(string str);
+
     public class BroadCast
     {
         public IPEndPoint from = new IPEndPoint(0, 0);
         
-        public void Recieve()
+        public void Recieve(int recievePort, ConnectHandler handler)
         {
-            UdpClient udpClient = new UdpClient(1111);
+            UdpClient udpClient = new UdpClient(recievePort); // recieving port
             Task.Run(() =>
             {
                 while (true)
                 {
                     try
                     {
-                        byte[] recvBuffer = udpClient.Receive(ref from);
-                        string str = Encoding.Unicode.GetString(recvBuffer);
-                        Debug.WriteLine(from.Address.ToString() + "  " + from.Port.ToString() + " " + str + '\n');
+                        byte[] recvBuffer = udpClient.Receive(ref from); // сообщение и от кого пришло
+                        string message = Encoding.Unicode.GetString(recvBuffer); // message from sender
+                        string strarg = from.Address.ToString() + "  " + from.Port.ToString() + " " + message + '\n';
+
+                        handler(strarg); // обработка результата
                     }
                     catch (Exception ex)
                     {
@@ -35,7 +39,12 @@ namespace LCPLIB
             });
         }
 
-        public void Send(int port)
+        public void StopRecieve()
+        {
+
+        }
+
+        public void Send(int port) // Порт получателя
         {
             UdpClient sender = new UdpClient();
             try
