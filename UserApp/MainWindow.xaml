@@ -9,5 +9,6 @@
     <Grid>
         <TextBlock x:Name="TextLog" HorizontalAlignment="Center">
         </TextBlock>
+        <Button Width="50" Height="50" Click="Button_Click_1" />
     </Grid>
 </Window>

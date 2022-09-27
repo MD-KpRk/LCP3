@@ -14,35 +14,54 @@ namespace LCPLIB
 
     public class BroadCast
     {
-        public IPEndPoint from = new IPEndPoint(0, 0);
         
-        public void Recieve(int recievePort, ConnectHandler handler)
+        public class Reciever
         {
-            UdpClient udpClient = new UdpClient(recievePort); // recieving port
-            Task.Run(() =>
+            IPEndPoint from = new IPEndPoint(0, 0);
+            int recievePort;
+            ConnectHandler? handler;
+            bool stopped = false;
+            public UdpClient? udpClient; // recieving port
+
+            public Reciever(int recievePort, ConnectHandler? handler)
             {
-                while (true)
+                this.recievePort = recievePort;
+                this.handler = handler;
+            }
+
+            public void StartRecieve()
+            {
+                udpClient = new UdpClient(this.recievePort);
+                stopped = false;
+                Task.Run(() =>
                 {
-                    try
+                    while (true && !stopped)
                     {
-                        byte[] recvBuffer = udpClient.Receive(ref from); // сообщение и от кого пришло
-                        string message = Encoding.Unicode.GetString(recvBuffer); // message from sender
-                        string strarg = from.Address.ToString() + "  " + from.Port.ToString() + " " + message + '\n';
+                        try
+                        {
+                            byte[] recvBuffer = udpClient.Receive(ref from); // сообщение и от кого пришло
+                            string message = Encoding.Unicode.GetString(recvBuffer); // message from sender
+                            string strarg = from.Address.ToString() + "  " + from.Port.ToString() + " " + message + '\n';
 
-                        handler(strarg); // обработка результата
+                            if(handler!=null)
+                                handler(strarg); // обработка результата
+                        }
+                        catch (Exception ex)
+                        {
+                            Debug.WriteLine(ex.Message);
+                        }
                     }
-                    catch (Exception ex)
-                    {
-                        Debug.WriteLine(ex.Message);
-                    }
-                }
-            });
+                });
+            }
+
+            public void StopRecieve()
+            {
+                stopped= true;
+                if(udpClient!=null)
+                    udpClient.Close();
+            }
         }
 
-        public void StopRecieve()
-        {
-
-        }
 
         public void Send(int port) // Порт получателя
         {

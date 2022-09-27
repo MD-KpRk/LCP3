@@ -22,11 +22,15 @@ namespace UserApp
     /// </summary>
     public partial class MainWindow : Window
     {
-        BroadCast bc = new BroadCast();
+        BroadCast.Reciever bc;
         public MainWindow()
         {
             InitializeComponent();
-            bc.Recieve(1111,AddLog);
+            
+            bc = new BroadCast.Reciever(1111, AddLog);
+            bc.StartRecieve();
+
+            //bc.Recieve(1111,AddLog);
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -38,7 +42,13 @@ namespace UserApp
             Application.Current.Dispatcher.Invoke(delegate
             {
                 TextLog.Text = TextLog.Text + str + "\n";
+                bc.StopRecieve();
             }); // получение доступа к потоку UI
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            bc.StartRecieve();
         }
     }
 }
