@@ -28,12 +28,12 @@ namespace AdminApp
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            BroadCast bc = new BroadCast();
-            bc.Send(1111);
+            //BroadCast bc = new BroadCast();
+            //bc.Send(1111);
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e) // старт серв
-        {
+        { 
             LCPLIB.TCP.Server server = new LCPLIB.TCP.Server();
             server.Start();
         }

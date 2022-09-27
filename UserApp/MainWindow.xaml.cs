@@ -27,17 +27,16 @@ namespace UserApp
         {
             InitializeComponent();
             
-            bc = new BroadCast.Reciever(1111, AddLog);
+            bc = new BroadCast.Reciever(1111, ProcessMessage);
             bc.StartRecieve();
 
-            //bc.Recieve(1111,AddLog);
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
         }
 
-        public void AddLog(string str)
+        public void ProcessMessage(string str)
         {
             Application.Current.Dispatcher.Invoke(delegate
             {
